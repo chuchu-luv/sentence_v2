@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>사고도구어 타자연습 -문장버전-</title>
+  <title>온독 도서 타자연습 -문장버전-</title>
 
+  <!-- 폰트 로드 -->
   <style>
     @font-face {
       font-family: 'ONE Mobile POP';
@@ -36,10 +37,9 @@
     }
   </style>
 
+  <!-- 전체 스타일 -->
   <style>
     :root{
-      --bg1: #fdf6ff;
-      --bg2: #e6f7ff;
       --panel: #ffffff;
       --border: #C9C9C9;
       --ink: #1f2a44;
@@ -56,12 +56,8 @@
       --inner: 0 1px 0 rgba(255,255,255,.8) inset, 0 -1px 0 rgba(0,0,0,.04) inset;
     }
 
-    *{box-sizing:border-box;}
-    html,body{
-      height:100%;
-      overflow-y:auto;
-      overflow-x:hidden;
-    }
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; overflow-y:auto; overflow-x:hidden; }
 
     @keyframes gradientShift{
       0%   {background-position:0 0, 100% 0, 0% 50%}
@@ -79,7 +75,7 @@
         linear-gradient(45deg, #FFEFF5, #FFF8E4, #F3FAFF, #F0ECFF, #F7FFE9);
       background-size: 120% 120%, 120% 120%, 400% 400%;
       background-position: 0 0, 100% 0, 0% 50%;
-      background-repeat: no-repeat, no-repeat, no-repeat;
+      background-repeat:no-repeat;
       animation: gradientShift 12s ease-in-out infinite;
       font-family:'Hakgyoansim Badasseugi','BMJUA','Noto Sans KR',system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
       letter-spacing:.2px;
@@ -116,6 +112,7 @@
       font-family:'Hakgyoansim Badasseugi','BMJUA','Noto Sans KR',sans-serif;
     }
 
+    /* 책 카드 */
     .card-title{
       font-size:22px;
       white-space:nowrap;
@@ -191,6 +188,7 @@
       filter:brightness(1.05);
     }
 
+    /* 메인 패널 */
     .panel{
       background:var(--panel);
       border:2px solid var(--border);
@@ -286,11 +284,7 @@
       box-shadow:var(--inner);
       word-break:keep-all;
     }
-
-    .target .ok{
-      color:var(--success);
-      font-weight:700;
-    }
+    .target .ok{ color:var(--success); font-weight:700; }
     .target .err{
       color:#c73939;
       text-decoration:underline;
@@ -298,11 +292,9 @@
       text-underline-offset:4px;
       font-weight:700;
     }
-    .target .next{
-      color:var(--ink);
-      font-weight:900;
-      text-decoration:none;
-    }
+    .target .next{ color:var(--ink); font-weight:900; text-decoration:none; }
+
+    /* 키워드 강조 */
     .target .kw{
       color:#007bff !important;
       font-weight:900;
@@ -358,10 +350,7 @@
       font-family:'Hakgyoansim Badasseugi','BMJUA','Noto Sans KR',sans-serif;
       font-weight:700;
     }
-    .btn:hover{
-      filter:brightness(1.05);
-      transform:translateY(-1px);
-    }
+    .btn:hover{ filter:brightness(1.05); transform:translateY(-1px); }
     .btn.success{ background:#DBEEFF; color:var(--ink); }
     .btn.danger{ background:#FFDBDB; color:var(--ink); }
     .btn.primary{ background:linear-gradient(180deg,var(--primary),#ff9866); color:#fff; }
@@ -389,8 +378,6 @@
       font-weight:400;
       word-break:keep-all;
     }
-
-    .flex-spacer{ flex:1; min-height:0; }
 
     .overlay{
       position:fixed;
@@ -453,9 +440,7 @@
       gap:14px;
       margin-bottom:16px;
     }
-    .modal-grid .chip{
-      background:var(--chip);
-    }
+    .modal-grid .chip{ background:var(--chip); }
     .modal-grid .chip .val{
       color:var(--warning);
       font-size:26px;
@@ -466,6 +451,7 @@
       display:flex;
       gap:12px;
       justify-content:center;
+      flex-wrap:wrap;
     }
     .help{
       font-size:16px;
@@ -479,6 +465,7 @@
 <body>
   <div id="app"></div>
 
+  <!-- 일시정지 오버레이 -->
   <div id="pauseOverlay" class="overlay" aria-hidden="true">
     <div class="pause-box">
       <div style="font-size:22px; color:var(--ink); margin-bottom:8px">일시 정지</div>
@@ -490,6 +477,7 @@
     </div>
   </div>
 
+  <!-- 결과 팝업 -->
   <div id="resultModal" class="modal" aria-hidden="true">
     <div class="modal-card">
       <div class="modal-title">완료!</div>
@@ -526,16 +514,25 @@
   <script>
   'use strict';
 
+  /* ---------- 도우미 ---------- */
   function $(sel){ return document.querySelector(sel); }
   function $all(sel){ return Array.prototype.slice.call(document.querySelectorAll(sel)); }
   function setText(sel, text){ var el = $(sel); if(el){ el.textContent = String(text); } }
   function addClass(sel, cls){ var el = $(sel); if(el){ el.classList.add(cls); el.setAttribute('aria-hidden','false'); } }
   function removeClass(sel, cls){ var el = $(sel); if(el){ el.classList.remove(cls); el.setAttribute('aria-hidden','true'); } }
   function escapeHTML(str){
-    return String(str).replace(/[&<>"']/g, function(s){ return ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[s]); });
+    return String(str).replace(/[&<>"']/g, function(s){
+      return ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[s]);
+    });
   }
-  function trimTrailingSpaces(s){ s = String(s||''); var i = s.length; while(i>0 && s.charAt(i-1)===' ') i--; return s.slice(0,i); }
+  function trimTrailingSpaces(s){
+    s = String(s||'');
+    var i = s.length;
+    while(i>0 && s.charAt(i-1)===' ') i--;
+    return s.slice(0,i);
+  }
 
+  /* ---------- 문자열 diff & 통계 ---------- */
   function alignOps(target, typed){
     var n = target.length;
     var m = typed.length;
@@ -562,9 +559,21 @@
           i4--; j4--; continue;
         }
       }
-      if(i4>0 && dp[i4][j4] === dp[i4-1][j4] + 1){ ops.push({op:'del', ch:target.charAt(i4-1)}); i4--; continue; }
-      if(j4>0 && dp[i4][j4] === dp[i4][j4-1] + 1){ ops.push({op:'ins', ch:typed.charAt(j4-1)}); j4--; continue; }
-      if(i4>0){ ops.push({op:'del', ch:target.charAt(i4-1)}); i4--; } else { ops.push({op:'ins', ch:typed.charAt(j4-1)}); j4--; }
+      if(i4>0 && dp[i4][j4] === dp[i4-1][j4] + 1){
+        ops.push({op:'del', ch:target.charAt(i4-1)});
+        i4--; continue;
+      }
+      if(j4>0 && dp[i4][j4] === dp[i4][j4-1] + 1){
+        ops.push({op:'ins', ch:typed.charAt(j4-1)});
+        j4--; continue;
+      }
+      if(i4>0){
+        ops.push({op:'del', ch:target.charAt(i4-1)});
+        i4--;
+      } else {
+        ops.push({op:'ins', ch:typed.charAt(j4-1)});
+        j4--;
+      }
     }
     ops.reverse();
     return ops;
@@ -579,15 +588,15 @@
       if(o.op === 'diag'){
         var cls1 = o.match ? 'ok' : 'err';
         if(kwMask && kwMask[pos]) cls1 += ' kw';
-        out += '<span class="' + cls1 + '">' + escapeHTML(o.ch) + '</span>';
+        out += '<span class="' + cls1 + '\">' + escapeHTML(o.ch) + '</span>';
         pos++;
       }else if(o.op === 'del'){
         var cls2 = 'next';
         if(kwMask && kwMask[pos]) cls2 += ' kw';
-        out += '<span class="' + cls2 + '">' + escapeHTML(o.ch) + '</span>';
+        out += '<span class="' + cls2 + '\">' + escapeHTML(o.ch) + '</span>';
         pos++;
       }else if(o.op === 'ins'){
-        // 화면에 안 보여줌 (오타로 더 친 글자)
+        // 추가 타자(오타로 더 친 글자)는 화면엔 안 보임
       }
     }
     return out;
@@ -641,12 +650,12 @@
 
   function feedback(acc, speed){
     if(acc===100 && speed>=200) return '브라보! 정말 잘하고 있어요! ✨';
-    if(acc>=95) return '완벽에 가까워요! 👍';
-    if(acc>=85) return '좋아요! 집중력을 유지해요! 💪';
+    if(acc>=95)  return '완벽에 가까워요! 👍';
+    if(acc>=85)  return '좋아요! 집중력을 유지해요! 💪';
     return '천천히, 하지만 정확하게! 😊';
   }
 
-  // CSV 파서 -------------------------------------------------
+  /* ---------- CSV 파서 ---------- */
   function csvToRows(text){
     var rows = [];
     var row = [];
@@ -657,7 +666,8 @@
       if(inQuotes){
         if(ch === '"'){
           if(text[i+1] === '"'){
-            cell += '"'; i++;
+            cell += '"';
+            i++;
           }else{
             inQuotes = false;
           }
@@ -672,6 +682,7 @@
         }else if(ch === '\n'){
           row.push(cell); rows.push(row); row = []; cell = '';
         }else if(ch === '\r'){
+          // ignore CR
         }else{
           cell += ch;
         }
@@ -693,9 +704,9 @@
     var hasHeader = false;
     for(var h=0; h<hdr.length; h++){
       if(
-        hdr[h]==='문장' || hdr[h]==='sentence' || hdr[h]==='text' ||
-        hdr[h]==='키워드' || hdr[h]==='keyword' || hdr[h]==='key' ||
-        hdr[h]==='order' || hdr[h]==='순서' || hdr[h]==='번호'
+        hdr[h]==='문장'   || hdr[h]==='sentence' || hdr[h]==='text' ||
+        hdr[h]==='키워드' || hdr[h]==='keyword'  || hdr[h]==='key'  ||
+        hdr[h]==='order'  || hdr[h]==='순서'     || hdr[h]==='번호'
       ){
         hasHeader = true;
         break;
@@ -722,6 +733,7 @@
       var row = rows[r];
       if(!row || row.length===0) continue;
 
+      // 문장
       var sentence = '';
       if(sentenceCol>=0){
         sentence = String(row[sentenceCol]||'');
@@ -733,6 +745,7 @@
       sentence = sentence.trim();
       if(!sentence) continue;
 
+      // 키워드 (없으면 빈 문자열)
       var keyword = '';
       if(keywordCol>=0){
         keyword = String(row[keywordCol]||'').trim();
@@ -774,15 +787,20 @@
     return mask;
   }
 
-  // CSV 파일 경로 (GitHub Pages에서 index.html과 같은 폴더)
+  /* ---------- CSV 파일들 ---------- */
   const CSV_FILES = {
     hedgehog: 'sentences_hedgehog.csv',
     complain: 'sentences_complain.csv',
-    fake: 'sentences_fake.csv',
-    monster: 'sentences_monster.csv'
+    fake:     'sentences_fake.csv',
+    monster:  'sentences_monster.csv'
   };
 
-  // 기본 문장 세트 (CSV 못 불러온 경우 대비)
+  /* ---------- 책 정보 ---------- */
+  // stars: 난이도 표시
+  // 미움을 파는 고슴도치  = ★☆☆ (1)
+  // 불만왕 뽑기대회     = ★★☆ (2)
+  // 가짜 뉴스를 시작...  = ★★☆ (2)
+  // 몬스터 차일드        = ★★★ (3)
   var BOOKS = [
     {
       id: 'hedgehog',
@@ -834,6 +852,7 @@
     }
   ];
 
+  /* ---------- 전체 상태 ---------- */
   var state = {
     screen: 'select',
     currentBook: null,
@@ -850,12 +869,13 @@
 
   var app = $('#app');
 
+  /* ---------- CSV 불러오기 ---------- */
   async function loadSentencesFor(bookId){
     const file = CSV_FILES[bookId];
     if(!file) return [];
     try{
       const res = await fetch(file, { cache:'no-store' });
-      if(!res.ok) throw new Error('HTTP ' + res.status);
+      if(!res.ok) throw new Error('HTTP '+res.status);
       const txt = await res.text();
       return parseSentencesCSV(txt);
     }catch(err){
@@ -864,13 +884,14 @@
     }
   }
 
+  /* ---------- 화면 렌더링: 선택 화면 ---------- */
   function renderSelect(){
     state.screen = 'select';
     clearTimer();
 
     app.innerHTML = `
       <div class="container">
-        <h1 class="title">사고도구어 타자연습 -문장버전-</h1>
+        <h1 class="title">온독 도서 타자연습 -문장버전-</h1>
         <div class="subtitle">원하는 책을 고르고 시작하세요!</div>
 
         <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:16px;">
@@ -879,7 +900,7 @@
               <div class="book-card" data-id="${b.id}">
                 <img class="cover" src="${b.cover}" alt="${b.title} 표지"/>
                 <div class="card-title">${b.title}</div>
-                <div class="card-stars">${b.stars}</div>
+                <div class="card-stars">난이도 ${b.stars}</div>
                 <div style="font-size:16px; color: var(--muted);">${b.author}</div>
                 <div class="card-ondok">온독지수 ${b.ondok}</div>
               </div>
@@ -920,6 +941,7 @@
     window.onkeydown = null;
   }
 
+  /* ---------- 게임 시작 ---------- */
   async function startGame(book){
     state.currentBook = Object.assign({}, book);
 
@@ -936,6 +958,7 @@
     focusInputSoon();
   }
 
+  /* ---------- 현재 문장 준비 ---------- */
   function prepareSentence(){
     var list = state.currentBook.sentences || [];
     var idx = state.sentenceIndex % (list.length || 1);
@@ -960,13 +983,14 @@
     return nextItem.text || '';
   }
 
+  /* ---------- 화면 렌더링: 게임 화면 ---------- */
   function renderGame(){
     state.screen = 'game';
     var b = state.currentBook;
 
     app.innerHTML = `
       <div class="container">
-        <h1 class="title">사고도구어 타자연습 -문장버전-</h1>
+        <h1 class="title">온독 도서 타자연습 -문장버전-</h1>
 
         <section class="panel">
           <div class="head-grid">
@@ -975,7 +999,7 @@
               <div class="book-title">${b.title}</div>
               <div class="book-author">${b.author}</div>
               <div class="ondok-line">온독지수 <strong>${b.ondok}</strong>
-                <span style="color:#ffb84d; font-weight:700; font-size:22px; margin-left:6px;">${b.stars}</span>
+                <span style="color:#ffb84d; font-weight:700; font-size:22px; margin-left:6px;">난이도 ${b.stars}</span>
               </div>
             </div>
 
@@ -1002,8 +1026,14 @@
           <div id="target" class="target" style="margin-top:6px"></div>
 
           <div class="row">
-            <input id="typing" type="text" inputmode="text" autocomplete="off" spellcheck="false"
-              placeholder="여기에 입력… (엔터 또는 완료 버튼)" />
+            <input id="typing"
+              type="text"
+              inputmode="text"
+              autocomplete="off"
+              autocapitalize="off"
+              spellcheck="false"
+              placeholder="여기에 입력… (완료 버튼 또는 Enter)" />
+
             <button class="btn success" id="finishBtn" title="결과보기">✅ 완료</button>
             <button class="btn secondary" id="pauseBtn" title="일시 정지(P)">⏸ 일시정지</button>
           </div>
@@ -1029,7 +1059,7 @@
     if(typing){
       typing.addEventListener('input', onType);
       typing.addEventListener('keydown', onKey);
-      typing.addEventListener('keyup', onKey); // iPad 등 소프트 키보드 대응
+      typing.addEventListener('keyup', onKey); // iPad 소프트키보드 대비
     }
 
     var finishBtn = $('#finishBtn');
@@ -1063,6 +1093,7 @@
     focusInputSoon();
 
     window.onkeydown = function(ev){
+      // 결과 모달 떠 있을 때 키 처리
       if($('#resultModal').classList.contains('show')){
         if(ev.key === 'Enter' || ev.key === 'Return'){
           ev.preventDefault();
@@ -1080,12 +1111,14 @@
 
       if(state.screen !== 'game') return;
 
+      // P -> 일시정지 토글
       if(String(ev.key).toLowerCase() === 'p'){
         ev.preventDefault();
         togglePause();
         return;
       }
 
+      // ESC -> 처음 화면
       if(ev.key === 'Escape'){
         ev.preventDefault();
         hideModal();
@@ -1095,6 +1128,7 @@
     };
   }
 
+  /* ---------- UI 업데이트 ---------- */
   function updateTargetHighlight(currentTyped){
     var html = diffMarkup(state.target, currentTyped || '', state.kwMask);
     var el = $('#target');
@@ -1135,6 +1169,7 @@
     state.timerId = null;
   }
 
+  /* ---------- 일시정지 / 결과모달 ---------- */
   function togglePause(){
     if(state.finished) return;
     var typing = $('#typing');
@@ -1152,7 +1187,6 @@
       focusInputSoon();
     }
   }
-
   function showPause(){ addClass('#pauseOverlay','show'); }
   function hidePause(){ removeClass('#pauseOverlay','show'); }
 
@@ -1166,6 +1200,7 @@
   }
   function hideModal(){ removeClass('#resultModal','show'); }
 
+  /* ---------- 문장 완료/재시작 ---------- */
   function focusInputSoon(){
     setTimeout(function(){
       var typing = $('#typing');
@@ -1232,6 +1267,7 @@
     focusInputSoon();
   }
 
+  /* ---------- 이벤트 핸들러 ---------- */
   function onType(ev){
     var typing = ev.target;
     var val = typing.value || '';
@@ -1241,13 +1277,14 @@
   }
 
   function onKey(ev){
-    // iPad 등에서 keydown/keyup 이벤트가 다르게 올 수 있으므로 Enter/Return 둘 다 체크
+    // iPad 소프트키보드 등에서 Enter가 'Return' 으로 나올 수도 있음
     if(ev.key === 'Enter' || ev.key === 'Return'){
       ev.preventDefault();
       finishSentence();
     }
   }
 
+  /* ---------- 실행 시작 ---------- */
   renderSelect();
   </script>
 </body>
