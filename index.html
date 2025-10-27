@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>사고도구어 타자연습 -문장버전-</title>
+
+  <style>
+    @font-face {
+      font-family: 'ONE Mobile POP';
+      src: url('./ONE Mobile POP.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Hakgyoansim Badasseugi';
+      src: url('./Hakgyoansim Badasseugi TTF L.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Hakgyoansim Badasseugi';
+      src: url('./Hakgyoansim Badasseugi TTF B.ttf') format('truetype');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'BMJUA';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.0/BMJUA.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+  </style>
+
+  <style>
+    :root{
+      --bg1: #fdf6ff;
+      --bg2: #e6f7ff;
+      --panel: #ffffff;
+      --border: #C9C9C9;
+      --ink: #1f2a44;
+      --muted: #8c93a8;
+      --chip: #f4f7ff;
+      --primary: #ff7b7b;
+      --secondary: #6bd3ff;
+      --success: #2fb579;
+      --danger: #ff5a5a;
+      --warning: #ffb84d;
+      --magenta: #ff78c6;
+      --violet: #9f87ff;
+      --shadow: 0 18px 40px rgba(18, 28, 49, 0.18);
+      --inner: 0 1px 0 rgba(255,255,255,.8) inset, 0 -1px 0 rgba(0,0,0,.04) inset;
+    }
+
+    *{box-sizing:border-box;}
+    html,body{ height:100%; overflow-y:auto; overflow-x:hidden; }
+
+    @keyframes gradientShift{
+      0%   {background-position:0 0, 100% 0, 0% 50%}
+      50%  {background-position:-60px -30px, 110% -40px, 100% 50%}
+      100% {background-position:0 0, 100% 0, 0% 50%}
+    }
+    body{
+      margin:0; color:var(--ink);
+      -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+      background:
+        radial-gradient(80vmax 50vmax at 20% -10%, rgba(255,232,243,0.9) 0%, rgba(255,232,243,0) 65%),
+        radial-gradient(70vmax 50vmax at 100% 0%, rgba(234,247,255,0.9) 0%, rgba(234,247,255,0) 65%),
+        linear-gradient(45deg, #FFEFF5, #FFF8E4, #F3FAFF, #F0ECFF, #F7FFE9);
+      background-size: 120% 120%, 120% 120%, 400% 400%;
+      background-position: 0 0, 100% 0, 0% 50%; background-repeat:no-repeat;
+      animation: gradientShift 12s ease-in-out infinite;
+      font-family:'Hakgyoansim Badasseugi','BMJUA','Noto Sans KR',system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+      letter-spacing:.2px; font-size:20px;
+    }
+
+    .container{ max-width:1200px; margin:0 auto; padding:16px 24px; min-height:100vh; display:flex; flex-direction:column; gap:12px; }
+
+    .title{
+      font-family:'ONE Mobile POP','BMJUA','Noto Sans KR',system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+      text-align:center; line-height:1.05; margin:2px 0 0; font-size:clamp(40px,6.5vw,76px);
+      background:linear-gradient(90deg,#ff7b7b,#ffb84d,#6bd3ff,#9f87ff); -webkit-background-clip:text; background-clip:text; color:transparent;
+    }
+    .subtitle{ text-align:center; font-size:24px; color:var(--muted); margin:2px 0 6px; font-weight:700; font-family:'Hakgyoansim Badasseugi','BMJUA','Noto Sans KR',sans-serif; }
+
+    .card-title{ font-size:22px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; line-height:1.25; text-align:center; font-family:'Hakgyoansim Badasseugi','BMJUA','Noto Sans KR',sans-serif; font-weight:700; }
+    .card-ondok{ font-size:16px; color:#6a4cff; font-weight:800; letter-spacing:.2px; }
+    .book-card{ background:var(--panel); border:2px solid var(--border); border-radius:18px; box-shadow:var(--shadow); padding:12px; display:flex; flex-direction:column; gap:8px; cursor:pointer; transition:transform .18s ease, box-shadow .18s ease, filter .18s ease; align-items:center; text-align:center; }
+    .book-card:hover{ background:#F8F7FF; transform:translateY(-8px); box-shadow:0 18px 50px rgba(18,28,49,.28); }
+    .book-card.selected{ background:#F7E8FF; border-color:#C9C9C9; box-shadow:0 20px 52px rgba(143,120,255,.22); }
+
+    .start-wrap{ display:flex; justify-content:center; margin:24px 0 8px; }
+    .start-big{ min-width:320px; height:76px; font-size:28px; border-radius:18px; border:2px solid var(--border); box-shadow:var(--shadow); background:#ECE8FF; color:var(--ink); transition:transform .12s ease, filter .12s ease, box-shadow .12s ease; font-family:'ONE Mobile POP','BMJUA','Noto Sans KR',sans-serif; font-weight:400; }
+    .start-big:disabled{ opacity:.65; cursor:not-allowed; }
+    .start-big.on{ background:#ECE8FF; color:var(--ink); cursor:pointer; box-shadow:0 16px 40px rgba(143,120,255,.35), 0 0 0 2px rgba(143,120,255,.25) inset; }
+    .start-big.on:hover{ transform:translateY(-2px); filter:brightness(1.05); }
+
+    .panel{ background:var(--panel); border:2px solid var(--border); border-radius:22px; box-shadow:var(--shadow); padding:16px; display:flex; flex-direction:column; gap:12px; flex:1; min-height:0; }
+
+    .head-grid{ display:grid; grid-template-columns:160px minmax(280px,1fr) 380px; gap:16px; align-items:center; }
+    .cover{ width:160px; height:200px; object-fit:cover; border:2px solid var(--border); border-radius:16px; box-shadow:var(--inner); background:#fff; }
+    .book-meta{ display:flex; flex-direction:column; gap:8px; }
+    .book-title{ font-size:30px; line-height:1.2; font-weight:700; }
+    .book-author{ font-size:20px; color:var(--muted); }
+    .ondok-line{ font-size:26px; margin-top:2px; }
+    .ondok-line strong{ font-size:34px; color:var(--ink); }
+
+    .stats-fixed{ display:grid; grid-template-columns:repeat(2,1fr); grid-auto-rows:1fr; gap:12px; }
+    .chip{ background:var(--chip); border:2px solid var(--border); border-radius:14px; padding:14px; text-align:center; display:flex; flex-direction:column; justify-content:center; box-shadow:var(--inner); }
+    .chip .lbl{ display:block; font-size:18px; color:var(--muted); margin-bottom:6px; font-family:'Hakgyoansim Badasseugi','BMJUA','Noto Sans KR',sans-serif; font-weight:700; }
+    .chip .val{ font-size:28px; color:var(--success); font-family:'Hakgyoansim Badasseugi','BMJUA','Noto Sans KR',sans-serif; font-weight:700; }
+
+    .target{ background:#fff; border:2px solid var(--border); border-radius:16px; padding:16px; min-height:110px; line-height:2.1; font-size:26px; color:var(--ink); box-shadow:var(--inner); word-break:keep-all; }
+    .target .ok{ color:var(--success); font-weight:700; }
+    .target .err{ color:#c73939; text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:4px; font-weight:700; }
+    .target .next{ color:var(--ink); font-weight:900; text-decoration:none; }
+    .target .kw{ color:#007bff !important; font-weight:900; }
+    .target .ok.kw{ color:#007bff !important; text-decoration:none; }
+    .target .err.kw{ color:#007bff !important; text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:4px; }
+    .target .next.kw{ color:#007bff !important; text-decoration:none; }
+
+    .row{ display:flex; gap:12px; align-items:center; }
+    #typing{ flex:1; font-family:inherit; font-size:26px; padding:16px; border-radius:16px; border:2px solid var(--border); outline:none; background:#FFF8F7; color:var(--ink); box-shadow:var(--inner); }
+
+    .btn{ display:inline-flex; align-items:center; justify-content:center; gap:8px; cursor:pointer; user-select:none; padding:14px 18px; border-radius:14px; border:2px solid var(--border); text-decoration:none; font-size:20px; box-shadow:var(--shadow); transition:transform .12s ease, box-shadow .12s ease, filter .12s ease; font-family:'Hakgyoansim Badasseugi','BMJUA','Noto Sans KR',sans-serif; font-weight:700; }
+    .btn:hover{ filter:brightness(1.05); transform:translateY(-1px); }
+    .btn.success{ background:#DBEEFF; color:var(--ink); }
+    .btn.danger{ background:#FFDBDB; color:var(--ink); }
+    .btn.primary{ background:linear-gradient(180deg,var(--primary),#ff9866); color:#fff; }
+    .btn.secondary{ background:linear-gradient(180deg,var(--secondary),#49b6ff); color:#fff; }
+    .btn.pink{ background:linear-gradient(180deg,var(--magenta),#ff9fde); color:#fff; }
+    .btn.neutral{ background:linear-gradient(180deg,#eef3fb,#d6e0f3); color:var(--ink); }
+
+    .nextbox{ background:#fff; border:2px solid var(--border); border-radius:12px; padding:12px; box-shadow:var(--inner); }
+    .nextbox .lbl{ font-size:18px; color:var(--muted); margin-bottom:6px; display:block; }
+    .nextbox .sent{ font-size:20px; color:var(--muted); font-family:'Hakgyoansim Badasseugi','BMJUA','Noto Sans KR',sans-serif; font-weight:400; word-break:keep-all; }
+
+    .flex-spacer{ flex:1; min-height:0; }
+
+    .overlay{ position:fixed; inset:0; background:rgba(0,0,0,.25); display:none; align-items:center; justify-content:center; z-index:10; }
+    .overlay.show{ display:flex; }
+    .pause-box{ background:#fff; border:2px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:24px; text-align:center; width:min(520px,92vw); font-size:18px; }
+
+    .modal{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(0,6,20,0.35); backdrop-filter:blur(4px); z-index:20; }
+    .modal.show{ display:flex; }
+    .modal-card{ background:#E8F8FF; border:2px solid var(--border); border-radius:18px; box-shadow:0 18px 50px rgba(24,36,56,.28); width:min(640px,94vw); padding:24px; }
+    .modal-title{ font-size:34px; margin:2px 0 10px; color:var(--success); text-align:center; letter-spacing:.5px; font-weight:800; }
+    .modal-msg{ text-align:center; font-size:20px; color:#4b5563; margin-bottom:14px; font-weight:700; }
+    .modal-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-bottom:16px; }
+    .modal-grid .chip{ background:var(--chip); }
+    .modal-grid .chip .val{ color:var(--warning); font-size:26px; font-family:'Hakgyoansim Badasseugi','BMJUA','Noto Sans KR',sans-serif; font-weight:700; }
+    .modal-actions{ display:flex; gap:12px; justify-content:center; }
+    .help{ font-size:16px; color:var(--muted); margin-top:10px; text-align:center; }
+  </style>
+</head>
+
+<body>
+  <div id="app"></div>
+
+  <div id="pauseOverlay" class="overlay" aria-hidden="true">
+    <div class="pause-box">
+      <div style="font-size:22px; color:var(--ink); margin-bottom:8px">일시 정지</div>
+      <div class="help">계속하려면 아래 버튼을 누르거나 Esc 키를 누르세요.</div>
+      <div style="display:flex; gap:8px; justify-content:center; margin-top:12px">
+        <button class="btn secondary" id="resumeBtn">계속하기</button>
+        <button class="btn primary" id="toSelectBtn">처음으로</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="resultModal" class="modal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-title">완료!</div>
+      <div id="mMsg" class="modal-msg">잘했어요! 계속 가볼까요? 👍</div>
+      <div class="modal-grid">
+        <div class="chip"><span class="lbl">소요시간(초)</span><span id="mTime" class="val">0</span></div>
+        <div class="chip"><span class="lbl">입력글자(타수)</span><span id="mChars" class="val">0</span></div>
+        <div class="chip"><span class="lbl">정확도(%)</span><span id="mAcc" class="val">0</span></div>
+        <div class="chip"><span class="lbl">타자 속도(타/분)</span><span id="mSpeed" class="val">0</span></div>
+      </div>
+      <div class="help">Enter: 계속하기 · ESC: 다시하기</div>
+      <div class="modal-actions">
+        <button class="btn success" id="keepBtn">계속하기 (Enter)</button>
+        <button class="btn danger" id="redoBtn">다시하기 (ESC)</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  'use strict';
+  function $(sel){ return document.querySelector(sel); }
+  function $all(sel){ return Array.prototype.slice.call(document.querySelectorAll(sel)); }
+  function setText(sel, text){ var el = $(sel); if(el){ el.textContent = String(text); } }
+  function addClass(sel, cls){ var el = $(sel); if(el){ el.classList.add(cls); el.setAttribute('aria-hidden','false'); } }
+  function removeClass(sel, cls){ var el = $(sel); if(el){ el.classList.remove(cls); el.setAttribute('aria-hidden','true'); } }
+  function escapeHTML(str){ return String(str).replace(/[&<>"']/g, function(s){ return ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[s]); }); }
+  function trimTrailingSpaces(s){ s = String(s||''); var i = s.length; while(i>0 && s.charAt(i-1)===' ') i--; return s.slice(0,i); }
+
+  function alignOps(target, typed){
+    var n = target.length; var m = typed.length; var dp = new Array(n+1);
+    for(var i=0;i<=n;i++){ dp[i] = new Array(m+1); }
+    for(var i2=0;i2<=n;i2++){ dp[i2][0] = i2; }
+    for(var j2=0;j2<=m;j2++){ dp[0][j2] = j2; }
+    for(var i3=1;i3<=n;i3++){
+      for(var j3=1;j3<=m;j3++){
+        var cost = (target.charAt(i3-1) === typed.charAt(j3-1)) ? 0 : 1;
+        var del = dp[i3-1][j3] + 1; var ins = dp[i3][j3-1] + 1; var sub = dp[i3-1][j3-1] + cost;
+        dp[i3][j3] = Math.min(del, ins, sub);
+      }
+    }
+    var ops = []; var i4 = n, j4 = m;
+    while(i4>0 || j4>0){
+      if(i4>0 && j4>0){
+        var costDiag = (target.charAt(i4-1) === typed.charAt(j4-1)) ? 0 : 1;
+        if(dp[i4][j4] === dp[i4-1][j4-1] + costDiag){ ops.push({ op:'diag', match:(costDiag===0), ch:target.charAt(i4-1) }); i4--; j4--; continue; }
+      }
+      if(i4>0 && dp[i4][j4] === dp[i4-1][j4] + 1){ ops.push({op:'del', ch:target.charAt(i4-1)}); i4--; continue; }
+      if(j4>0 && dp[i4][j4] === dp[i4][j4-1] + 1){ ops.push({op:'ins', ch:typed.charAt(j4-1)}); j4--; continue; }
+      if(i4>0){ ops.push({op:'del', ch:target.charAt(i4-1)}); i4--; } else { ops.push({op:'ins', ch:typed.charAt(j4-1)}); j4--; }
+    }
+    ops.reverse(); return ops;
+  }
+
+  function diffMarkup(target, typed, kwMask){
+    var ops = alignOps(target, typed||''); var out = ''; var pos = 0;
+    for(var k=0;k<ops.length;k++){
+      var o = ops[k];
+      if(o.op === 'diag'){
+        var cls1 = o.match ? 'ok' : 'err'; if(kwMask && kwMask[pos]) cls1 += ' kw';
+        out += '<span class="' + cls1 + '\">' + escapeHTML(o.ch) + '</span>'; pos++;
+      }else if(o.op === 'del'){
+        var cls2 = 'next'; if(kwMask && kwMask[pos]) cls2 += ' kw';
+        out += '<span class="' + cls2 + '\">' + escapeHTML(o.ch) + '</span>'; pos++;
+      }else if(o.op === 'ins'){ /* 화면 표시 안 함 */ }
+    }
+    return out;
+  }
+
+  function calcCpm(charCount, seconds){ var secs = Math.max(0, seconds||0); var mins = secs / 60; return mins>0 ? Math.round(charCount / mins) : 0; }
+
+  function calcAccuracy(target, typed){
+    target = target || ''; typed = trimTrailingSpaces(typed || ''); if(target.length===0 && typed.length===0) return 100;
+    var ops = alignOps(target, typed); var match = 0; var errors = 0;
+    for(var k=0;k<ops.length;k++){
+      var o = ops[k]; if(o.op === 'diag'){ if(o.match) match++; else errors++; } else if(o.op === 'del' || o.op === 'ins'){ errors++; }
+    }
+    var total = match + errors; if(total===0) return 0; return Math.max(0, Math.min(100, Math.round((match/total)*100)));
+  }
+
+  function calcAccuracyLive(target, typed){
+    target = target || ''; typed = trimTrailingSpaces(typed || ''); if(typed.length===0) return 0;
+    var ops = alignOps(target, typed); var consumed = 0, correct = 0, errors = 0;
+    for(var k=0; k<ops.length && consumed < typed.length; k++){
+      var o = ops[k]; if(o.op === 'diag'){ consumed++; if(o.match) correct++; else errors++; } else if(o.op === 'ins'){ consumed++; errors++; }
+    }
+    var total = correct + errors; if(total===0) return 0; return Math.max(0, Math.min(100, Math.round((correct/total)*100)));
+  }
+
+  function feedback(acc, speed){ if(acc===100 && speed>=200) return '브라보! 정말 잘하고 있어요! ✨'; if(acc>=95) return '완벽에 가까워요! 👍'; if(acc>=85) return '좋아요! 집중력을 유지해요! 💪'; return '천천히, 하지만 정확하게! 😊'; }
+
+  // --- CSV 유틸 ---
+  function csvToRows(text){
+    var rows = []; var row = []; var cell = ''; var inQuotes = false;
+    for(var i=0;i<text.length;i++){
+      var ch = text[i];
+      if(inQuotes){
+        if(ch === '"'){
+          if(text[i+1] === '"'){ cell += '"'; i++; } else { inQuotes = false; }
+        }else{ cell += ch; }
+      }else{
+        if(ch === '"'){ inQuotes = true; }
+        else if(ch === ','){ row.push(cell); cell = ''; }
+        else if(ch === '\n'){ row.push(cell); rows.push(row); row = []; cell = ''; }
+        else if(ch === '\r'){ /* ignore */ }
+        else{ cell += ch; }
+      }
+    }
+    row.push(cell); rows.push(row);
+    return rows.filter(function(r){ return !(r.length===1 && String(r[0]).trim()===''); });
+  }
+
+  function parseSentencesCSV(text){
+    text = String(text||'').replace(/^\uFEFF/, '');
+    var rows = csvToRows(text); if(rows.length===0) return [];
+
+    var hdr = rows[0].map(function(c){ return String(c||'').trim().toLowerCase(); });
+    var hasHeader = false;
+    for(var h=0; h<hdr.length; h++){
+      if(hdr[h]==='문장' || hdr[h]==='sentence' || hdr[h]==='text' || hdr[h]==='키워드' || hdr[h]==='keyword' || hdr[h]==='key' || hdr[h]==='order' || hdr[h]==='순서' || hdr[h]==='번호'){ hasHeader = true; break; }
+    }
+
+    var sentenceCol = -1, keywordCol = -1, orderCol = -1;
+    if(hasHeader){
+      for(var c=0;c<rows[0].length;c++){
+        var name = hdr[c];
+        if(name==='문장' || name==='sentence' || name==='text') sentenceCol = c;
+        if(name==='키워드' || name==='keyword' || name==='key') keywordCol = c;
+        if(name==='order' || name==='순서' || name==='번호') orderCol = c;
+      }
+    }
+
+    var start = hasHeader ? 1 : 0; var tmp = [];
+    for(var r=start; r<rows.length; r++){
+      var row = rows[r]; if(!row || row.length===0) continue;
+      var sentence = ''; var keyword = ''; var orderVal = r;
+
+      if(hasHeader){
+        if(sentenceCol>=0){ sentence = String(row[sentenceCol]||''); }
+        else if(row.length===1){ sentence = String(row[0]||''); }
+        else{ sentence = String(row[row.length-1]||''); }
+        if(keywordCol>=0){ keyword = String(row[keywordCol]||''); }
+      }else{
+        // 헤더가 없고 2열 이상이면 [0]=키워드, 마지막=문장 으로 처리
+        if(row.length>=2){ keyword = String(row[0]||''); sentence = String(row[row.length-1]||''); }
+        else { sentence = String(row[0]||''); }
+      }
+
+      sentence = sentence.trim(); keyword = keyword.trim();
+      if(!sentence) continue;
+
+      // 문장 안에 [키워드] 표기되어 있으면 키워드 자동 추출 + 대괄호 제거
+      var bracketKeywords = [];
+      sentence = sentence.replace(/\[([^\]]+)\]/g, function(_,g1){ bracketKeywords.push(g1.trim()); return g1; });
+      if(!keyword && bracketKeywords.length){ keyword = Array.from(new Set(bracketKeywords)).join('|'); }
+
+      // 키워드 필드가 [설명] 처럼 괄호 포함되어 있으면 제거
+      if(keyword){ keyword = keyword.replace(/^\[(.*)\]$/, '$1'); }
+
+      // order 값 파싱 (있으면)
+      if(orderCol>=0){ var raw = Number(String(row[orderCol]).replace(/[^0-9-]+/g,'')); if(!Number.isNaN(raw)) orderVal = raw; }
+
+      tmp.push({ order: orderVal, text: sentence, keyword: keyword });
+    }
+
+    if(tmp.length && orderCol>=0){ tmp.sort(function(a,b){ return (a.order||0)-(b.order||0); }); }
+    return tmp.map(function(x){ return { text:x.text, keyword:x.keyword||'' }; });
+  }
+
+  function buildKeywordMask(text, keyword){
+    var mask = new Array(String(text||'').length).fill(false); if(!keyword) return mask;
+    var toks = String(keyword).split(/[|,\s]+/).filter(Boolean);
+    for(var t=0;t<toks.length;t++){
+      var tok = toks[t].replace(/^\[|\]$/g,''); if(!tok) continue; var idx = 0;
+      while(true){ idx = text.indexOf(tok, idx); if(idx === -1) break; for(var j=idx; j<idx+tok.length && j<mask.length; j++){ mask[j] = true; } idx = idx + Math.max(1, tok.length); }
+    }
+    return mask;
+  }
+
+  // CSV 파일 경로 (index.html과 같은 폴더에 두세요)
+  const CSV_FILES = {
+    hedgehog: 'sentences_hedgehog.csv',
+    complain: 'sentences_complain.csv',
+    fake: 'sentences_fake.csv',
+    monster: 'sentences_monster.csv'
+  };
+
+  // 기본(폴백) 문장 세트: CSV 불러오기 실패시 사용
+  var BOOKS = [
+    { id:'hedgehog', title:'미움을 파는 고슴도치', author:'슬라비 스토에프', ondok:238, cover:'https://image.yes24.com/goods/103073730/XL', sentences:[
+      { text:'고슴도치가 짧게 대답하더니 설명을 덧붙였어.', keyword:'설명' },
+      { text:'중요한 회의나 축하 행사가 있을 때 이용하는 곳이었어.', keyword:'이용' }
+    ]},
+    { id:'complain', title:'불만왕 뽑기대회', author:'정복현·이갑규', ondok:294, cover:'https://image.yes24.com/goods/99307997/XL', sentences:[
+      { text:'일기에 그 내용을 적다 말고 다시 한번 영상을 돌려 봤어.', keyword:'내용' },
+      { text:'누에에 대해서 잘 모르는 시청자를 위해 소개 좀 해 주실까요?', keyword:'소개' }
+    ]},
+    { id:'fake', title:'가짜 뉴스를 시작하겠습니다', author:'김경옥', ondok:269, cover:'https://image.yes24.com/goods/82892578/XL', sentences:[
+      { text:'결과보다 노력하는 과정이 소중한 거잖아요.', keyword:'결과' },
+      { text:'잘못하면 간접 광고가 되니까요.', keyword:'간접' }
+    ]},
+    { id:'monster', title:'몬스터 차일드', author:'이재문', ondok:333, cover:'https://image.yes24.com/goods/103668412/XL', sentences:[
+      { text:'아저씨는 우리를 2층 연구실로 안내했다.', keyword:'안내' },
+      { text:'공부도, 학교생활도 잘할 수 있도록 성실히 지도하겠습니다.', keyword:'지도' }
+    ]}
+  ];
+
+  var state = { screen:'select', currentBook:null, sentenceIndex:0, target:'', keyword:'', kwMask:[], startedAt:0, timerId:null, seconds:0, isPaused:false, finished:false, loadedFromCsv:false };
+  var app = $('#app');
+
+  async function loadSentencesFor(bookId){
+    const file = CSV_FILES[bookId]; if(!file) return [];
+    try{ const res = await fetch(file, { cache:'no-store' }); if(!res.ok) throw new Error('HTTP '+res.status); const txt = await res.text(); return parseSentencesCSV(txt);
+    }catch(err){ console.warn('[CSV] load failed for', bookId, err); return []; }
+  }
+
+  function renderSelect(){
+    state.screen = 'select'; clearTimer();
+    app.innerHTML = `
+      <div class="container">
+        <h1 class="title">사고도구어 타자연습 -문장버전-</h1>
+        <div class="subtitle">원하는 책을 고르고 시작하세요!</div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:16px;">
+          ${BOOKS.map(function(b){ return `
+            <div class="book-card" data-id="${b.id}">
+              <img class="cover" src="${b.cover}" alt="${b.title} 표지"/>
+              <div class="card-title">${b.title}</div>
+              <div style="font-size:16px; color: var(--muted);">${b.author}</div>
+              <div class="card-ondok">온독지수 ${b.ondok}</div>
+            </div>`; }).join('')}
+        </div>
+        <div class="start-wrap"><button class="start-big" id="startBig" disabled>시작하기</button></div>
+      </div>`;
+
+    var selectedId = null; var cards = $all('.book-card'); var startBig = $('#startBig');
+    cards.forEach(function(card){ card.addEventListener('click', function(){ cards.forEach(function(c){ c.classList.remove('selected'); }); card.classList.add('selected'); selectedId = card.getAttribute('data-id'); if(startBig){ startBig.disabled = false; startBig.classList.add('on'); } }); });
+    if(startBig){ startBig.addEventListener('click', function(){ if(!selectedId) return; var book = BOOKS.find(function(x){ return x.id === selectedId; }); if(book){ startGame(book); } }); }
+    window.onkeydown = null;
+  }
+
+  async function startGame(book){
+    state.currentBook = Object.assign({}, book);
+    var loaded = await loadSentencesFor(book.id);
+    state.loadedFromCsv = Array.isArray(loaded) && loaded.length>0;
+    if(state.loadedFromCsv){ state.currentBook.sentences = loaded; } else { state.currentBook.sentences = book.sentences || []; }
+    state.sentenceIndex = 0; prepareSentence(); renderGame(); focusInputSoon();
+  }
+
+  function prepareSentence(){
+    var list = state.currentBook.sentences || []; var idx = state.sentenceIndex % (list.length || 1); var item = list[idx] || { text:'', keyword:'' };
+    state.target = item.text || ''; state.keyword = item.keyword || ''; state.kwMask = buildKeywordMask(state.target, state.keyword);
+    state.seconds = 0; state.startedAt = 0; state.isPaused = false; state.finished = false; clearTimer();
+  }
+
+  function getNextSentence(){ var list = state.currentBook.sentences || []; var nextIdx = (state.sentenceIndex + 1) % (list.length || 1); var nextItem = list[nextIdx] || { text:'' }; return nextItem.text || ''; }
+
+  function renderGame(){
+    state.screen = 'game'; var b = state.currentBook;
+    app.innerHTML = `
+      <div class="container">
+        <h1 class="title">사고도구어 타자연습 -문장버전-</h1>
+        <section class="panel">
+          <div class="head-grid">
+            <img class="cover" src="${b.cover}" alt="표지"/>
+            <div class="book-meta">
+              <div class="book-title">${b.title}</div>
+              <div class="book-author">${b.author}</div>
+              <div class="ondok-line">온독지수 <strong>${b.ondok}</strong></div>
+            </div>
+            <div class="stats-fixed">
+              <div class="chip"><span class="lbl">시간(초)</span><span id="s-time" class="val">0</span></div>
+              <div class="chip"><span class="lbl">글자 수</span><span id="s-chars" class="val">0</span></div>
+              <div class="chip"><span class="lbl">정확도(%)</span><span id="s-acc" class="val">0</span></div>
+              <div class="chip"><span class="lbl">타자속도(타/분)</span><span id="s-speed" class="val">0</span></div>
+            </div>
+          </div>
+
+          <div id="csvBar" class="nextbox" style="display:none; margin-top:6px;">
+            <span class="lbl">CSV 로딩 안내</span>
+            <div id="csvMsg" class="sent">CSV를 불러오지 못해 기본 문장으로 진행 중입니다.</div>
+            <div style="margin-top:8px; display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+              <input type="file" id="csvFileInput" accept=".csv" style="display:none" />
+              <button class="btn success" id="csvPickBtn">CSV 업로드해서 불러오기</button>
+              <span class="help">(파일명 예시: sentences_${b.id}.csv)</span>
+            </div>
+          </div>
+
+          <div id="target" class="target" style="margin-top:6px"></div>
+          <div class="row">
+            <input id="typing" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="여기에 입력… (엔터: 결과)" />
+            <button class="btn secondary" id="pauseBtn" title="일시 정지(P)">⏸ 일시정지</button>
+          </div>
+          <div class="nextbox"><span class="lbl">다음 문장 미리보기</span><div id="nextSentence" class="sent"></div></div>
+          <div class="row" style="justify-content:flex-end"><button class="btn neutral" id="restartBook">다시하기</button><button class="btn pink" id="backBtn">처음으로</button></div>
+        </section>
+      </div>`;
+
+    // CSV 바 표시 조건: CSV에서 못 읽어왔을 때
+    if(!state.loadedFromCsv){ var bar = $('#csvBar'); if(bar){ bar.style.display = 'block'; } }
+
+    updateTargetHighlight(''); setText('#nextSentence', getNextSentence()); renderStats('');
+
+    var typing = $('#typing'); if(typing){ typing.addEventListener('input', onType); typing.addEventListener('keydown', onKey); }
+    var pauseBtn = $('#pauseBtn'); if(pauseBtn){ pauseBtn.addEventListener('click', togglePause); }
+    var restartBook = $('#restartBook'); if(restartBook){ restartBook.addEventListener('click', function(){ hideModal(); restartCurrent(); }); }
+    var backBtn = $('#backBtn'); if(backBtn){ backBtn.addEventListener('click', function(){ hideModal(); renderSelect(); }); }
+
+    var resumeBtn = $('#resumeBtn'); if(resumeBtn){ resumeBtn.onclick = function(){ if(state.isPaused){ togglePause(); } }; }
+    var toSelectBtn = $('#toSelectBtn'); if(toSelectBtn){ toSelectBtn.onclick = function(){ hidePause(); renderSelect(); }; }
+    var keepBtn = $('#keepBtn'); if(keepBtn){ keepBtn.onclick = function(){ hideModal(); nextSentence(); }; }
+    var redoBtn = $('#redoBtn'); if(redoBtn){ redoBtn.onclick = function(){ hideModal(); restartCurrent(); }; }
+
+    // CSV 업로드 핸들러
+    var csvPickBtn = $('#csvPickBtn'); var csvInput = $('#csvFileInput');
+    if(csvPickBtn && csvInput){
+      csvPickBtn.onclick = function(){ csvInput.click(); };
+      csvInput.onchange = function(ev){
+        var f = ev.target.files && ev.target.files[0]; if(!f) return;
+        var fr = new FileReader();
+        fr.onload = function(){
+          try{
+            var arr = parseSentencesCSV(String(fr.result||''));
+            if(arr && arr.length){ state.currentBook.sentences = arr; state.sentenceIndex = 0; state.loadedFromCsv = true; prepareSentence(); updateTargetHighlight(''); setText('#nextSentence', getNextSentence()); renderStats(''); var bar = $('#csvBar'); if(bar){ bar.style.display = 'none'; } focusInputSoon(); }
+            else{ alert('CSV를 읽었지만 문장을 찾지 못했습니다. (열 이름이나 형식을 확인하세요: 키워드,문장)'); }
+          }catch(e){ console.error(e); alert('CSV 파싱 중 오류가 발생했습니다.'); }
+        };
+        fr.readAsText(f, 'utf-8');
+      };
+    }
+
+    state.startedAt = 0; state.seconds = 0; state.finished = false; clearTimer(); focusInputSoon();
+
+    window.onkeydown = function(ev){
+      if($('#resultModal').classList.contains('show')){
+        if(ev.key === 'Enter'){ ev.preventDefault(); hideModal(); nextSentence(); return; }
+        if(ev.key === 'Escape'){ ev.preventDefault(); hideModal(); restartCurrent(); return; }
+      }
+      if(state.screen !== 'game') return;
+      if(String(ev.key).toLowerCase() === 'p'){ ev.preventDefault(); togglePause(); return; }
+      if(ev.key === 'Escape'){ ev.preventDefault(); hideModal(); renderSelect(); return; }
+    };
+  }
+
+  function updateTargetHighlight(currentTyped){ var html = diffMarkup(state.target, currentTyped || '', state.kwMask); var el = $('#target'); if(el){ el.innerHTML = html; } }
+  function renderStats(currentTyped){ currentTyped = String(currentTyped||''); var nowAcc = calcAccuracyLive(state.target, currentTyped); var chars = trimTrailingSpaces(currentTyped).length; var spd = calcCpm(chars, state.seconds); setText('#s-time', state.seconds); setText('#s-chars', chars); setText('#s-acc', nowAcc); setText('#s-speed', spd); }
+  function startTimerIfNeeded(typedVal){ if(state.startedAt===0 && typedVal.length>0 && !state.isPaused && !state.finished){ state.startedAt = Date.now(); state.timerId = setInterval(tickTimer, 1000); } }
+  function tickTimer(){ if(state.isPaused || state.finished) return; if(state.startedAt>0){ state.seconds = Math.floor((Date.now() - state.startedAt)/1000); } var typingEl = $('#typing'); var val = typingEl ? typingEl.value || '' : ''; renderStats(val); }
+  function clearTimer(){ if(state.timerId){ clearInterval(state.timerId); } state.timerId = null; }
+  function togglePause(){ if(state.finished) return; var typing = $('#typing'); if(!state.isPaused){ state.isPaused = true; showPause(); clearTimer(); if(typing){ typing.disabled = true; } } else { state.isPaused = false; hidePause(); if(typing){ typing.disabled = false; } state.startedAt = Date.now() - state.seconds*1000; state.timerId = setInterval(tickTimer,1000); focusInputSoon(); } }
+  function showPause(){ addClass('#pauseOverlay','show'); } function hidePause(){ removeClass('#pauseOverlay','show'); }
+  function showModal(stats){ addClass('#resultModal','show'); setText('#mMsg', stats.msg); setText('#mTime', stats.time); setText('#mChars', stats.chars); setText('#mAcc', stats.acc); setText('#mSpeed', stats.speed); }
+  function hideModal(){ removeClass('#resultModal','show'); }
+  function focusInputSoon(){ setTimeout(function(){ var typing = $('#typing'); if(typing && !typing.disabled){ typing.focus(); } },30); }
+  function finishSentence(){ if(state.finished) return; var typing = $('#typing'); if(!typing) return; var val = trimTrailingSpaces(typing.value || ''); state.finished = true; clearTimer(); if(state.startedAt>0){ state.seconds = Math.floor((Date.now()-state.startedAt)/1000); } var finalAcc = calcAccuracy(state.target, val); var chars = val.length; var finalSpeed = calcCpm(chars, state.seconds); var msg = feedback(finalAcc, finalSpeed); updateTargetHighlight(val); typing.disabled = true; showModal({ msg: msg, time: state.seconds, chars: chars, acc: finalAcc, speed: finalSpeed }); }
+  function nextSentence(){ state.sentenceIndex++; prepareSentence(); var typing = $('#typing'); if(typing){ typing.disabled = false; typing.value=''; } updateTargetHighlight(''); setText('#nextSentence', getNextSentence()); renderStats(''); focusInputSoon(); }
+  function restartCurrent(){ prepareSentence(); var typing = $('#typing'); if(typing){ typing.disabled = false; typing.value=''; } updateTargetHighlight(''); setText('#nextSentence', getNextSentence()); renderStats(''); focusInputSoon(); }
+  function onType(ev){ var typing = ev.target; var val = typing.value || ''; startTimerIfNeeded(val); updateTargetHighlight(val); renderStats(val); }
+  function onKey(ev){ if(ev.key === 'Enter'){ ev.preventDefault(); finishSentence(); } }
+
+  renderSelect();
+  </script>
+</body>
+</html>
