@@ -588,12 +588,12 @@
       if(o.op === 'diag'){
         var cls1 = o.match ? 'ok' : 'err';
         if(kwMask && kwMask[pos]) cls1 += ' kw';
-        out += '<span class="' + cls1 + '\">' + escapeHTML(o.ch) + '</span>';
+        out += '<span class="' + cls1 + '">' + escapeHTML(o.ch) + '</span>';
         pos++;
       }else if(o.op === 'del'){
         var cls2 = 'next';
         if(kwMask && kwMask[pos]) cls2 += ' kw';
-        out += '<span class="' + cls2 + '\">' + escapeHTML(o.ch) + '</span>';
+        out += '<span class="' + cls2 + '">' + escapeHTML(o.ch) + '</span>';
         pos++;
       }else if(o.op === 'ins'){
         // 추가 타자(오타로 더 친 글자)는 화면엔 안 보임
@@ -796,11 +796,6 @@
   };
 
   /* ---------- 책 정보 ---------- */
-  // stars: 난이도 표시
-  // 미움을 파는 고슴도치  = ★☆☆ (1)
-  // 불만왕 뽑기대회     = ★★☆ (2)
-  // 가짜 뉴스를 시작...  = ★★☆ (2)
-  // 몬스터 차일드        = ★★★ (3)
   var BOOKS = [
     {
       id: 'hedgehog',
@@ -864,7 +859,9 @@
     timerId: null,
     seconds: 0,
     isPaused: false,
-    finished: false
+    finished: false,
+    // 엔터 중복 방지 플래그
+    finishing: false
   };
 
   var app = $('#app');
@@ -972,6 +969,7 @@
     state.startedAt = 0;
     state.isPaused  = false;
     state.finished  = false;
+    state.finishing = false;
 
     clearTimer();
   }
@@ -1058,8 +1056,7 @@
     var typing = $('#typing');
     if(typing){
       typing.addEventListener('input', onType);
-      typing.addEventListener('keydown', onKey);
-      typing.addEventListener('keyup', onKey); // iPad 소프트키보드 대비
+      typing.addEventListener('keydown', onKey); // keyup은 사용하지 않음
     }
 
     var finishBtn = $('#finishBtn');
@@ -1089,12 +1086,14 @@
     state.startedAt = 0;
     state.seconds   = 0;
     state.finished  = false;
+    state.finishing = false;
     clearTimer();
     focusInputSoon();
 
     window.onkeydown = function(ev){
       // 결과 모달 떠 있을 때 키 처리
       if($('#resultModal').classList.contains('show')){
+        if (ev.isComposing) return; // IME 조합 보호
         if(ev.key === 'Enter' || ev.key === 'Return'){
           ev.preventDefault();
           hideModal();
@@ -1208,17 +1207,34 @@
     },30);
   }
 
+  // IME·중복 호출 방지: 엔터는 한 번만, 조합 중엔 무시
+  function onKey(ev){
+    if (ev.isComposing) return; // 조합 중이면 무시
+    if(ev.key === 'Enter' || ev.key === 'Return'){
+      ev.preventDefault();
+      if (state.finishing || state.finished) return;
+      state.finishing = true;
+      // 조합 종료 직후 확정값을 읽도록 0ms 지연
+      setTimeout(function(){
+        finishSentence();
+        state.finishing = false;
+      }, 0);
+    }
+  }
+
+  // 최종 값 안전하게 읽고 통계 반영
   function finishSentence(){
     if(state.finished) return;
     var typing = $('#typing');
     if(!typing) return;
 
     var val = trimTrailingSpaces(typing.value || '');
-    state.finished = true;
     clearTimer();
 
     if(state.startedAt>0){
       state.seconds = Math.floor((Date.now()-state.startedAt)/1000);
+    } else {
+      state.seconds = 0;
     }
 
     var finalAcc   = calcAccuracy(state.target, val);
@@ -1228,6 +1244,7 @@
 
     updateTargetHighlight(val);
     typing.disabled = true;
+    state.finished = true;
 
     showModal({
       msg:   msg,
@@ -1267,21 +1284,13 @@
     focusInputSoon();
   }
 
-  /* ---------- 이벤트 핸들러 ---------- */
+  /* ---------- 입력 반응 ---------- */
   function onType(ev){
     var typing = ev.target;
     var val = typing.value || '';
     startTimerIfNeeded(val);
     updateTargetHighlight(val);
     renderStats(val);
-  }
-
-  function onKey(ev){
-    // iPad 소프트키보드 등에서 Enter가 'Return' 으로 나올 수도 있음
-    if(ev.key === 'Enter' || ev.key === 'Return'){
-      ev.preventDefault();
-      finishSentence();
-    }
   }
 
   /* ---------- 실행 시작 ---------- */
