@@ -112,243 +112,62 @@
       font-family:'Hakgyoansim Badasseugi','BMJUA','Noto Sans KR',sans-serif;
     }
 
-    /* 책 카드 */
-    .card-title{
-      font-size:22px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      line-height:1.25;
-      text-align:center;
-      font-family:'Hakgyoansim Badasseugi','BMJUA','Noto Sans KR',sans-serif;
-      font-weight:700;
-    }
-    .card-stars{
-      font-size:16px;
-      color:#ffb84d;
-      font-weight:800;
-      letter-spacing:.2px;
-      text-align:center;
-      line-height:1.2;
-    }
-    .card-ondok{
-      font-size:16px;
-      color:#6a4cff;
-      font-weight:800;
-      letter-spacing:.2px;
-    }
+    .card-title{ font-size:22px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; line-height:1.25; text-align:center; font-family:'Hakgyoansim Badasseugi','BMJUA','Noto Sans KR',sans-serif; font-weight:700; }
+    .card-stars{ font-size:16px; color:#ffb84d; font-weight:800; letter-spacing:.2px; text-align:center; line-height:1.2; }
+    .card-ondok{ font-size:16px; color:#6a4cff; font-weight:800; letter-spacing:.2px; }
     .book-card{
-      background:var(--panel);
-      border:2px solid var(--border);
-      border-radius:18px;
-      box-shadow:var(--shadow);
-      padding:12px;
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-      cursor:pointer;
-      transition:transform .18s ease, box-shadow .18s ease, filter .18s ease;
-      align-items:center;
-      text-align:center;
+      background:var(--panel); border:2px solid var(--border); border-radius:18px; box-shadow:var(--shadow);
+      padding:12px; display:flex; flex-direction:column; gap:8px; cursor:pointer; transition:transform .18s ease, box-shadow .18s ease, filter .18s ease; align-items:center; text-align:center;
     }
-    .book-card:hover{
-      background:#F8F7FF;
-      transform:translateY(-8px);
-      box-shadow:0 18px 50px rgba(18,28,49,.28);
-    }
-    .book-card.selected{
-      background:#F7E8FF;
-      border-color:#C9C9C9;
-      box-shadow:0 20px 52px rgba(143,120,255,.22);
-    }
+    .book-card:hover{ background:#F8F7FF; transform:translateY(-8px); box-shadow:0 18px 50px rgba(18,28,49,.28); }
+    .book-card.selected{ background:#F7E8FF; border-color:#C9C9C9; box-shadow:0 20px 52px rgba(143,120,255,.22); }
 
     .start-wrap{ display:flex; justify-content:center; margin:24px 0 8px; }
     .start-big{
-      min-width:320px;
-      height:76px;
-      font-size:28px;
-      border-radius:18px;
-      border:2px solid var(--border);
-      box-shadow:var(--shadow);
-      background:#ECE8FF;
-      color:var(--ink);
-      transition:transform .12s ease, filter .12s ease, box-shadow .12s ease;
-      font-family:'ONE Mobile POP','BMJUA','Noto Sans KR',sans-serif;
-      font-weight:400;
+      min-width:320px; height:76px; font-size:28px; border-radius:18px; border:2px solid var(--border); box-shadow:var(--shadow);
+      background:#ECE8FF; color:var(--ink); transition:transform .12s ease, filter .12s ease, box-shadow .12s ease;
+      font-family:'ONE Mobile POP','BMJUA','Noto Sans KR',sans-serif; font-weight:400;
     }
     .start-big:disabled{ opacity:.65; cursor:not-allowed; }
-    .start-big.on{
-      background:#ECE8FF;
-      color:var(--ink);
-      cursor:pointer;
-      box-shadow:0 16px 40px rgba(143,120,255,.35), 0 0 0 2px rgba(143,120,255,.25) inset;
-    }
-    .start-big.on:hover{
-      transform:translateY(-2px);
-      filter:brightness(1.05);
-    }
+    .start-big.on{ background:#ECE8FF; color:var(--ink); cursor:pointer; box-shadow:0 16px 40px rgba(143,120,255,.35), 0 0 0 2px rgba(143,120,255,.25) inset; }
+    .start-big.on:hover{ transform:translateY(-2px); filter:brightness(1.05); }
 
-    /* 메인 패널 */
     .panel{
-      background:var(--panel);
-      border:2px solid var(--border);
-      border-radius:22px;
-      box-shadow:var(--shadow);
-      padding:16px;
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      flex:1;
-      min-height:0;
+      background:var(--panel); border:2px solid var(--border); border-radius:22px; box-shadow:var(--shadow);
+      padding:16px; display:flex; flex-direction:column; gap:12px; flex:1; min-height:0;
     }
 
-    .head-grid{
-      display:grid;
-      grid-template-columns:160px minmax(280px,1fr) 380px;
-      gap:16px;
-      align-items:center;
-    }
-    .cover{
-      width:160px;
-      height:200px;
-      object-fit:cover;
-      border:2px solid var(--border);
-      border-radius:16px;
-      box-shadow:var(--inner);
-      background:#fff;
-    }
-    .book-meta{
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-    }
-    .book-title{
-      font-size:30px;
-      line-height:1.2;
-      font-weight:700;
-    }
-    .book-author{
-      font-size:20px;
-      color:var(--muted);
-    }
-    .ondok-line{
-      font-size:26px;
-      margin-top:2px;
-    }
-    .ondok-line strong{
-      font-size:34px;
-      color:var(--ink);
-    }
+    .head-grid{ display:grid; grid-template-columns:160px minmax(280px,1fr) 380px; gap:16px; align-items:center; }
+    .cover{ width:160px; height:200px; object-fit:cover; border:2px solid var(--border); border-radius:16px; box-shadow:var(--inner); background:#fff; }
+    .book-meta{ display:flex; flex-direction:column; gap:8px; }
+    .book-title{ font-size:30px; line-height:1.2; font-weight:700; }
+    .book-author{ font-size:20px; color:var(--muted); }
+    .ondok-line{ font-size:26px; margin-top:2px; }
+    .ondok-line strong{ font-size:34px; color:var(--ink); }
 
-    .stats-fixed{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      grid-auto-rows:1fr;
-      gap:12px;
-    }
-    .chip{
-      background:var(--chip);
-      border:2px solid var(--border);
-      border-radius:14px;
-      padding:14px;
-      text-align:center;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      box-shadow:var(--inner);
-    }
-    .chip .lbl{
-      display:block;
-      font-size:18px;
-      color:var(--muted);
-      margin-bottom:6px;
-      font-family:'Hakgyoansim Badasseugi','BMJUA','Noto Sans KR',sans-serif;
-      font-weight:700;
-    }
-    .chip .val{
-      font-size:28px;
-      color:var(--success);
-      font-family:'Hakgyoansim Badasseugi','BMJUA','Noto Sans KR',sans-serif;
-      font-weight:700;
-    }
+    .stats-fixed{ display:grid; grid-template-columns:repeat(2,1fr); grid-auto-rows:1fr; gap:12px; }
+    .chip{ background:var(--chip); border:2px solid var(--border); border-radius:14px; padding:14px; text-align:center; display:flex; flex-direction:column; justify-content:center; box-shadow:var(--inner); }
+    .chip .lbl{ display:block; font-size:18px; color:var(--muted); margin-bottom:6px; font-family:'Hakgyoansim Badasseugi','BMJUA','Noto Sans KR',sans-serif; font-weight:700; }
+    .chip .val{ font-size:28px; color:var(--success); font-family:'Hakgyoansim Badasseugi','BMJUA','Noto Sans KR',sans-serif; font-weight:700; }
 
     .target{
-      background:#fff;
-      border:2px solid var(--border);
-      border-radius:16px;
-      padding:16px;
-      min-height:110px;
-      line-height:2.1;
-      font-size:26px;
-      color:var(--ink);
-      box-shadow:var(--inner);
-      word-break:keep-all;
+      background:#fff; border:2px solid var(--border); border-radius:16px; padding:16px; min-height:110px; line-height:2.1; font-size:26px; color:var(--ink); box-shadow:var(--inner); word-break:keep-all;
     }
     .target .ok{ color:var(--success); font-weight:700; }
-    .target .err{
-      color:#c73939;
-      text-decoration:underline;
-      text-decoration-thickness:2px;
-      text-underline-offset:4px;
-      font-weight:700;
-    }
+    .target .err{ color:#c73939; text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:4px; font-weight:700; }
     .target .next{ color:var(--ink); font-weight:900; text-decoration:none; }
 
-    /* 키워드 강조 */
-    .target .kw{
-      color:#007bff !important;
-      font-weight:900;
-    }
-    .target .ok.kw{
-      color:#007bff !important;
-      text-decoration:none;
-    }
-    .target .err.kw{
-      color:#007bff !important;
-      text-decoration:underline;
-      text-decoration-thickness:2px;
-      text-underline-offset:4px;
-    }
-    .target .next.kw{
-      color:#007bff !important;
-      text-decoration:none;
-    }
+    .target .kw{ color:#007bff !important; font-weight:900; }
+    .target .ok.kw{ color:#007bff !important; text-decoration:none; }
+    .target .err.kw{ color:#007bff !important; text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:4px; }
+    .target .next.kw{ color:#007bff !important; text-decoration:none; }
 
-    .row{
-      display:flex;
-      gap:12px;
-      align-items:center;
-      flex-wrap:wrap;
-    }
-    #typing{
-      flex:1;
-      font-family:inherit;
-      font-size:26px;
-      padding:16px;
-      border-radius:16px;
-      border:2px solid var(--border);
-      outline:none;
-      background:#FFF8F7;
-      color:var(--ink);
-      box-shadow:var(--inner);
-    }
+    .row{ display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+    #typing{ flex:1; font-family:inherit; font-size:26px; padding:16px; border-radius:16px; border:2px solid var(--border); outline:none; background:#FFF8F7; color:var(--ink); box-shadow:var(--inner); }
 
     .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      cursor:pointer;
-      user-select:none;
-      padding:14px 18px;
-      border-radius:14px;
-      border:2px solid var(--border);
-      text-decoration:none;
-      font-size:20px;
-      box-shadow:var(--shadow);
-      transition:transform .12s ease, box-shadow .12s ease, filter .12s ease;
-      font-family:'Hakgyoansim Badasseugi','BMJUA','Noto Sans KR',sans-serif;
-      font-weight:700;
+      display:inline-flex; align-items:center; justify-content:center; gap:8px; cursor:pointer; user-select:none; padding:14px 18px; border-radius:14px; border:2px solid var(--border); text-decoration:none; font-size:20px; box-shadow:var(--shadow);
+      transition:transform .12s ease, box-shadow .12s ease, filter .12s ease; font-family:'Hakgyoansim Badasseugi','BMJUA','Noto Sans KR',sans-serif; font-weight:700;
     }
     .btn:hover{ filter:brightness(1.05); transform:translateY(-1px); }
     .btn.success{ background:#DBEEFF; color:var(--ink); }
@@ -358,107 +177,24 @@
     .btn.pink{ background:linear-gradient(180deg,var(--magenta),#ff9fde); color:#fff; }
     .btn.neutral{ background:linear-gradient(180deg,#eef3fb,#d6e0f3); color:var(--ink); }
 
-    .nextbox{
-      background:#fff;
-      border:2px solid var(--border);
-      border-radius:12px;
-      padding:12px;
-      box-shadow:var(--inner);
-    }
-    .nextbox .lbl{
-      font-size:18px;
-      color:var(--muted);
-      margin-bottom:6px;
-      display:block;
-    }
-    .nextbox .sent{
-      font-size:20px;
-      color:var(--muted);
-      font-family:'Hakgyoansim Badasseugi','BMJUA','Noto Sans KR',sans-serif;
-      font-weight:400;
-      word-break:keep-all;
-    }
+    .nextbox{ background:#fff; border:2px solid var(--border); border-radius:12px; padding:12px; box-shadow:var(--inner); }
+    .nextbox .lbl{ font-size:18px; color:var(--muted); margin-bottom:6px; display:block; }
+    .nextbox .sent{ font-size:20px; color:var(--muted); font-family:'Hakgyoansim Badasseugi','BMJUA','Noto Sans KR',sans-serif; font-weight:400; word-break:keep-all; }
 
-    .overlay{
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,.25);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      z-index:10;
-    }
+    .overlay{ position:fixed; inset:0; background:rgba(0,0,0,.25); display:none; align-items:center; justify-content:center; z-index:10; }
     .overlay.show{ display:flex; }
-    .pause-box{
-      background:#fff;
-      border:2px solid var(--border);
-      border-radius:16px;
-      box-shadow:var(--shadow);
-      padding:24px;
-      text-align:center;
-      width:min(520px,92vw);
-      font-size:18px;
-    }
+    .pause-box{ background:#fff; border:2px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:24px; text-align:center; width:min(520px,92vw); font-size:18px; }
 
-    .modal{
-      position:fixed;
-      inset:0;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      background:rgba(0,6,20,0.35);
-      backdrop-filter:blur(4px);
-      z-index:20;
-    }
+    .modal{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(0,6,20,0.35); backdrop-filter:blur(4px); z-index:20; }
     .modal.show{ display:flex; }
-    .modal-card{
-      background:#E8F8FF;
-      border:2px solid var(--border);
-      border-radius:18px;
-      box-shadow:0 18px 50px rgba(24,36,56,.28);
-      width:min(640px,94vw);
-      padding:24px;
-    }
-    .modal-title{
-      font-size:34px;
-      margin:2px 0 10px;
-      color:var(--success);
-      text-align:center;
-      letter-spacing:.5px;
-      font-weight:800;
-    }
-    .modal-msg{
-      text-align:center;
-      font-size:20px;
-      color:#4b5563;
-      margin-bottom:14px;
-      font-weight:700;
-    }
-    .modal-grid{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:14px;
-      margin-bottom:16px;
-    }
+    .modal-card{ background:#E8F8FF; border:2px solid var(--border); border-radius:18px; box-shadow:0 18px 50px rgba(24,36,56,.28); width:min(640px,94vw); padding:24px; }
+    .modal-title{ font-size:34px; margin:2px 0 10px; color:var(--success); text-align:center; letter-spacing:.5px; font-weight:800; }
+    .modal-msg{ text-align:center; font-size:20px; color:#4b5563; margin-bottom:14px; font-weight:700; }
+    .modal-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-bottom:16px; }
     .modal-grid .chip{ background:var(--chip); }
-    .modal-grid .chip .val{
-      color:var(--warning);
-      font-size:26px;
-      font-family:'Hakgyoansim Badasseugi','BMJUA','Noto Sans KR',sans-serif;
-      font-weight:700;
-    }
-    .modal-actions{
-      display:flex;
-      gap:12px;
-      justify-content:center;
-      flex-wrap:wrap;
-    }
-    .help{
-      font-size:16px;
-      color:var(--muted);
-      margin-top:10px;
-      text-align:center;
-    }
+    .modal-grid .chip .val{ color:var(--warning); font-size:26px; font-family:'Hakgyoansim Badasseugi','BMJUA','Noto Sans KR',sans-serif; font-weight:700; }
+    .modal-actions{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+    .help{ font-size:16px; color:var(--muted); margin-top:10px; text-align:center; }
   </style>
 </head>
 
@@ -675,24 +411,16 @@
           cell += ch;
         }
       }else{
-        if(ch === '"'){
-          inQuotes = true;
-        }else if(ch === ','){
-          row.push(cell); cell = '';
-        }else if(ch === '\n'){
-          row.push(cell); rows.push(row); row = []; cell = '';
-        }else if(ch === '\r'){
-          // ignore CR
-        }else{
-          cell += ch;
-        }
+        if(ch === '"'){ inQuotes = true; }
+        else if(ch === ','){ row.push(cell); cell = ''; }
+        else if(ch === '\n'){ row.push(cell); rows.push(row); row = []; cell = ''; }
+        else if(ch === '\r'){ /* ignore CR */ }
+        else{ cell += ch; }
       }
     }
     row.push(cell);
     rows.push(row);
-    return rows.filter(function(r){
-      return !(r.length===1 && String(r[0]).trim()==='');
-    });
+    return rows.filter(function(r){ return !(r.length===1 && String(r[0]).trim()===''); });
   }
 
   function parseSentencesCSV(text){
@@ -704,25 +432,19 @@
     var hasHeader = false;
     for(var h=0; h<hdr.length; h++){
       if(
-        hdr[h]==='문장'   || hdr[h]==='sentence' || hdr[h]==='text' ||
-        hdr[h]==='키워드' || hdr[h]==='keyword'  || hdr[h]==='key'  ||
-        hdr[h]==='order'  || hdr[h]==='순서'     || hdr[h]==='번호'
-      ){
-        hasHeader = true;
-        break;
-      }
+        hdr[h]==='문장' || hdr[h]==='sentence' || hdr[h]==='text' ||
+        hdr[h]==='키워드' || hdr[h]==='keyword' || hdr[h]==='key' ||
+        hdr[h]==='order' || hdr[h]==='순서' || hdr[h]==='번호'
+      ){ hasHeader = true; break; }
     }
 
-    var sentenceCol = -1;
-    var keywordCol  = -1;
-    var orderCol    = -1;
-
+    var sentenceCol = -1, keywordCol = -1, orderCol = -1;
     if(hasHeader){
       for(var c=0;c<rows[0].length;c++){
         var name = hdr[c];
-        if(name==='문장' || name==='sentence' || name==='text'){ sentenceCol = c; }
-        if(name==='키워드' || name==='keyword' || name==='key'){ keywordCol = c; }
-        if(name==='order' || name==='순서' || name==='번호'){ orderCol = c; }
+        if(name==='문장' || name==='sentence' || name==='text') sentenceCol = c;
+        if(name==='키워드' || name==='keyword' || name==='key')  keywordCol  = c;
+        if(name==='order' || name==='순서' || name==='번호')      orderCol    = c;
       }
     }
 
@@ -733,23 +455,15 @@
       var row = rows[r];
       if(!row || row.length===0) continue;
 
-      // 문장
       var sentence = '';
-      if(sentenceCol>=0){
-        sentence = String(row[sentenceCol]||'');
-      }else if(row.length===1){
-        sentence = String(row[0]||'');
-      }else{
-        sentence = String(row[row.length-1]||'');
-      }
+      if(sentenceCol>=0){ sentence = String(row[sentenceCol]||''); }
+      else if(row.length===1){ sentence = String(row[0]||''); }
+      else { sentence = String(row[row.length-1]||''); }
       sentence = sentence.trim();
       if(!sentence) continue;
 
-      // 키워드 (없으면 빈 문자열)
       var keyword = '';
-      if(keywordCol>=0){
-        keyword = String(row[keywordCol]||'').trim();
-      }
+      if(keywordCol>=0){ keyword = String(row[keywordCol]||'').trim(); }
 
       var orderVal = r;
       if(orderCol>=0){
@@ -778,13 +492,20 @@
       while(true){
         idx = text.indexOf(tok, idx);
         if(idx === -1) break;
-        for(var j=idx; j<idx+tok.length && j<mask.length; j++){
-          mask[j] = true;
-        }
+        for(var j=idx; j<idx+tok.length && j<mask.length; j++){ mask[j] = true; }
         idx = idx + Math.max(1, tok.length);
       }
     }
     return mask;
+  }
+
+  /* ---------- NEW: 셔플 ---------- */
+  function shuffleInPlace(arr){
+    for(var i = arr.length - 1; i > 0; i--){
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+    }
+    return arr;
   }
 
   /* ---------- CSV 파일들 ---------- */
@@ -797,54 +518,14 @@
 
   /* ---------- 책 정보 ---------- */
   var BOOKS = [
-    {
-      id: 'hedgehog',
-      title: '미움을 파는 고슴도치',
-      stars: '★☆☆',
-      author: '슬라비 스토에프',
-      ondok: 238,
-      cover: 'covers/hedgehog.jpg',
-      sentences: [
-        { text:'고슴도치가 짧게 대답하더니 설명을 덧붙였어.', keyword:'설명' },
-        { text:'중요한 회의나 축하 행사가 있을 때 이용하는 곳이었어.', keyword:'이용' }
-      ]
-    },
-    {
-      id: 'complain',
-      title: '불만왕 뽑기대회',
-      stars: '★★☆',
-      author: '정복현·이갑규',
-      ondok: 294,
-      cover: 'covers/complain.jpg',
-      sentences: [
-        { text:'일기에 그 내용을 적다 말고 다시 한번 영상을 돌려 봤어.', keyword:'내용' },
-        { text:'누에에 대해서 잘 모르는 시청자를 위해 소개 좀 해 주실까요?', keyword:'소개' }
-      ]
-    },
-    {
-      id: 'fake',
-      title: '가짜 뉴스를 시작하겠습니다',
-      stars: '★★☆',
-      author: '김경옥',
-      ondok: 269,
-      cover: 'covers/fake.jpg',
-      sentences: [
-        { text:'결과보다 노력하는 과정이 소중한 거잖아요.', keyword:'결과' },
-        { text:'잘못하면 간접 광고가 되니까요.', keyword:'간접' }
-      ]
-    },
-    {
-      id: 'monster',
-      title: '몬스터 차일드',
-      stars: '★★★',
-      author: '이재문',
-      ondok: 333,
-      cover: 'covers/monster.jpg',
-      sentences: [
-        { text:'아저씨는 우리를 2층 연구실로 안내했다.', keyword:'안내' },
-        { text:'공부도, 학교생활도 잘할 수 있도록 성실히 지도하겠습니다.', keyword:'지도' }
-      ]
-    }
+    { id:'hedgehog', title:'미움을 파는 고슴도치', stars:'★☆☆', author:'슬라비 스토에프', ondok:238, cover:'covers/hedgehog.jpg',
+      sentences:[ {text:'고슴도치가 짧게 대답하더니 설명을 덧붙였어.', keyword:'설명'}, {text:'중요한 회의나 축하 행사가 있을 때 이용하는 곳이었어.', keyword:'이용'} ] },
+    { id:'complain', title:'불만왕 뽑기대회', stars:'★★☆', author:'정복현·이갑규', ondok:294, cover:'covers/complain.jpg',
+      sentences:[ {text:'일기에 그 내용을 적다 말고 다시 한번 영상을 돌려 봤어.', keyword:'내용'}, {text:'누에에 대해서 잘 모르는 시청자를 위해 소개 좀 해 주실까요?', keyword:'소개'} ] },
+    { id:'fake', title:'가짜 뉴스를 시작하겠습니다', stars:'★★☆', author:'김경옥', ondok:269, cover:'covers/fake.jpg',
+      sentences:[ {text:'결과보다 노력하는 과정이 소중한 거잖아요.', keyword:'결과'}, {text:'잘못하면 간접 광고가 되니까요.', keyword:'간접'} ] },
+    { id:'monster', title:'몬스터 차일드', stars:'★★★', author:'이재문', ondok:333, cover:'covers/monster.jpg',
+      sentences:[ {text:'아저씨는 우리를 2층 연구실로 안내했다.', keyword:'안내'}, {text:'공부도, 학교생활도 잘할 수 있도록 성실히 지도하겠습니다.', keyword:'지도'} ] }
   ];
 
   /* ---------- 전체 상태 ---------- */
@@ -860,7 +541,6 @@
     seconds: 0,
     isPaused: false,
     finished: false,
-    // 엔터 중복 방지 플래그
     finishing: false
   };
 
@@ -920,10 +600,7 @@
         cards.forEach(function(c){ c.classList.remove('selected'); });
         card.classList.add('selected');
         selectedId = card.getAttribute('data-id');
-        if(startBig){
-          startBig.disabled = false;
-          startBig.classList.add('on');
-        }
+        if(startBig){ startBig.disabled = false; startBig.classList.add('on'); }
       });
     });
 
@@ -948,6 +625,9 @@
     }else{
       state.currentBook.sentences = book.sentences || [];
     }
+
+    // NEW: 시작할 때 매 라운드마다 다른 순서를 위해 한번 섞음
+    shuffleInPlace(state.currentBook.sentences);
 
     state.sentenceIndex = 0;
     prepareSentence();
@@ -976,7 +656,8 @@
 
   function getNextSentence(){
     var list = state.currentBook.sentences || [];
-    var nextIdx = (state.sentenceIndex + 1) % (list.length || 1);
+    if(!list.length) return '';
+    var nextIdx = (state.sentenceIndex + 1) % list.length;
     var nextItem = list[nextIdx] || { text:'' };
     return nextItem.text || '';
   }
@@ -1056,7 +737,7 @@
     var typing = $('#typing');
     if(typing){
       typing.addEventListener('input', onType);
-      typing.addEventListener('keydown', onKey); // keyup은 사용하지 않음
+      typing.addEventListener('keydown', onKey); // keyup은 사용 안 함
     }
 
     var finishBtn = $('#finishBtn');
@@ -1091,9 +772,8 @@
     focusInputSoon();
 
     window.onkeydown = function(ev){
-      // 결과 모달 떠 있을 때 키 처리
       if($('#resultModal').classList.contains('show')){
-        if (ev.isComposing) return; // IME 조합 보호
+        if (ev.isComposing) return;
         if(ev.key === 'Enter' || ev.key === 'Return'){
           ev.preventDefault();
           hideModal();
@@ -1110,14 +790,12 @@
 
       if(state.screen !== 'game') return;
 
-      // P -> 일시정지 토글
       if(String(ev.key).toLowerCase() === 'p'){
         ev.preventDefault();
         togglePause();
         return;
       }
 
-      // ESC -> 처음 화면
       if(ev.key === 'Escape'){
         ev.preventDefault();
         hideModal();
@@ -1207,14 +885,12 @@
     },30);
   }
 
-  // IME·중복 호출 방지: 엔터는 한 번만, 조합 중엔 무시
   function onKey(ev){
-    if (ev.isComposing) return; // 조합 중이면 무시
+    if (ev.isComposing) return;
     if(ev.key === 'Enter' || ev.key === 'Return'){
       ev.preventDefault();
       if (state.finishing || state.finished) return;
       state.finishing = true;
-      // 조합 종료 직후 확정값을 읽도록 0ms 지연
       setTimeout(function(){
         finishSentence();
         state.finishing = false;
@@ -1222,7 +898,6 @@
     }
   }
 
-  // 최종 값 안전하게 읽고 통계 반영
   function finishSentence(){
     if(state.finished) return;
     var typing = $('#typing');
@@ -1246,17 +921,21 @@
     typing.disabled = true;
     state.finished = true;
 
-    showModal({
-      msg:   msg,
-      time:  state.seconds,
-      chars: chars,
-      acc:   finalAcc,
-      speed: finalSpeed
-    });
+    showModal({ msg:msg, time:state.seconds, chars:chars, acc:finalAcc, speed:finalSpeed });
   }
 
   function nextSentence(){
+    var list = state.currentBook.sentences || [];
+    var len = list.length || 1;
+
     state.sentenceIndex++;
+
+    // NEW: 리스트를 한 바퀴 다 쓰면 즉시 다시 섞고 0번부터 시작
+    if(state.sentenceIndex >= len){
+      shuffleInPlace(state.currentBook.sentences);
+      state.sentenceIndex = 0;
+    }
+
     prepareSentence();
 
     var typing = $('#typing');
@@ -1265,13 +944,17 @@
       typing.value = '';
     }
 
-    updateTargetHighlight('');
     setText('#nextSentence', getNextSentence());
+    updateTargetHighlight('');
     renderStats('');
     focusInputSoon();
   }
 
   function restartCurrent(){
+    // 다시하기를 눌렀을 때도 새로 섞고 처음부터 할 수 있게 하려면 아래 두 줄 유지
+    shuffleInPlace(state.currentBook.sentences);
+    state.sentenceIndex = 0;
+
     prepareSentence();
     var typing = $('#typing');
     if(typing){
@@ -1284,7 +967,6 @@
     focusInputSoon();
   }
 
-  /* ---------- 입력 반응 ---------- */
   function onType(ev){
     var typing = ev.target;
     var val = typing.value || '';
